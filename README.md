@@ -1,4 +1,4 @@
-![Banner Image](drainpipe-banner.png)
+![Banner Image](drainpipe-banner2.png)
 
 # DrainPipe
 DrainPipe is a near real-time alerting system for DAO's and NFT communities. We monitor the chain for
