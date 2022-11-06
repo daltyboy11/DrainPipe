@@ -4,22 +4,35 @@ import { useForm } from "react-hook-form";
 export default function Home() {
     const [address, setAddress] = useState('')
     const [phone, setPhone] = useState('')
+    const [currentMethod, setCurrentMethod] = useState('')
 
     //to be updated for validation later
     const { register, errors, handleSubmit } = useForm();
 
+    const onDropdownChange = (e) => {
+      setCurrentMethod(e.target.value)
+    }
+
     const onSubmit = async (e) => {
+      //currentMethod = discord >> give enum
+
         console.log('hit')
-        e.preventDefault()
+        console.log({e})
         try {
-          const res = await fetch('http://localhost:8000/initservice', {
+          const res = await fetch('http://127.0.0.1:8000/initservice', {
             method: 'post',
             headers: {
               'Content-Type': 'application/json'
             },
             body: JSON.stringify({
               "contract_address": address, 
-              "phone_number": `+1${phone}`,
+              "channels": {
+                "sms": {
+                "enable": true,
+                "phone_number": `+1${phone}`
+              },
+            }
+
             })
           })
           console.log({res})
@@ -53,10 +66,10 @@ export default function Home() {
                             <div className="flex-shrink w-full inline-block relative">
                                 <select className="block appearance-none text-gray-600 w-full bg-white border border-gray-400 shadow-inner px-4 py-2 pr-8 rounded">
                                     <option>choose ...</option>
-                                    <option>Text</option>
-                                    <option>Discord</option>
-                                    <option>Telegram</option>
-                                    <option>Email</option>
+                                    <option value="text">Text</option>
+                                    <option value="discord">Discord</option>
+                                    <option value="telegram">Telegram</option>
+                                    <option value="email">Email</option>
                                 </select>
                                 <div className="pointer-events-none absolute top-0 mt-3  right-0 flex items-center px-2 text-gray-600">
                                     <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
