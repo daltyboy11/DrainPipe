@@ -24,10 +24,11 @@ class DuneService:
         # start_block = end_block - 10000
         # end_block = 15575300
         # start_block = 13276755
+        # Hardcoded for a few days, need to pass params from front end
         params={
             "contract": self.contract,
-            "start_block": "0",
-            "end_block": "99999999",
+            "start_block": "260000",
+            "end_block": "35284517",
             "min_transfers": "0"
         }
         return params
