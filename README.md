@@ -1,3 +1,5 @@
+![Banner Image](drainpipe-banner.png)
+
 # DrainPipe
 DrainPipe is a near real-time alerting system for DAO's and NFT communities. We monitor the chain for
 suspicious NFT activity (e.g. a large number of transfers for a collection in a single block) and send
@@ -6,7 +8,7 @@ the sooner you can TAKE ACTION!
 
 * Report the tokens as stolen to OpenSea to prevent the hacker from cashing out
 * Blacklist those tokens from DAO governance or protocol participation until the situation is fully understood
-* DAO bot re-buys NFTs with DAO insurance funcs
+* DAO bot re-buys NFTs with DAO insurance funds
 * DAO buys stolen NFTs and puts in quarantine wallet
 * Much, much more ...
 
@@ -18,6 +20,18 @@ user provides the collection address and the threshold in the input form.
 ## Drainpipe In ACTION
 ![Frontend Gif](frontendexample.gif)
 
+## How it's Made
+
+Drainpipe uses the following tech stack to build our hack:
+
+* Deployed our own NFT contract on Polygon
+* Dune Analytics to collect data on our deployed contract
+* Next.js/Tailwind frontend clinet to sign up for the service
+* FAST API to spin up a drainpipe service
+* Twillio and Discord for SMS and server notification webhooks
+
+See system architecture below for full design
+
 ## System Architecture
 ![System Architecture](system-architecture.png)
 
@@ -28,8 +42,10 @@ user provides the collection address and the threshold in the input form.
         * Other concurrent transactions from holders could indicate staking going live or a similar event.
     * Use listing data
         * Large transfers followed by listings well under Floor Price is obviously a drain
-* Adding more notification channels
-* Making detection closer to real-time
+* Adding more notification channels (Telegram/Twitter/Signal/Push(web3 protocol))
+* Making detection closer to real-time (Dune is several seconds to several minutes of latency)
+* Train models on historic on-chain data for threat detection
+* Index and track exploit contract address and notify immediately of wallet interaction
 
 # Installation
 ## Setup/Requirements
@@ -60,6 +76,10 @@ INFO:     Waiting for application startup.
 INFO:     Application startup complete.
 INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
 ```
+
+## Start the frontend client
+
+See [Frontend README.md](frontend/README.md) 
 
 Example POST to start the service
 ```

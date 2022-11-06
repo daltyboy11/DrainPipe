@@ -2,7 +2,7 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
-Install packages.
+### Install packages
 
 ```
 > cd frontend
@@ -16,6 +16,19 @@ warning "eslint-config-next > @typescript-eslint/parser > @typescript-eslint/typ
 [4/4] 🔨  Building fresh packages...
 success Saved lockfile.
 ✨  Done in 143.47s.
+```
+
+### Run the server
+
+```
+cd frontend
+yarn dev
+yarn run v1.22.19
+$ next dev
+ready - started server on 0.0.0.0:3000, url: http://localhost:3000
+event - compiled client and server successfully in 1942 ms (154 modules)
+wait  - compiling...
+event - compiled successfully in 119 ms (130 modules)
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
