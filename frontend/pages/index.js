@@ -5,10 +5,11 @@ export default function Home() {
     const [address, setAddress] = useState('')
     const [phone, setPhone] = useState('')
     const [currentMethod, setCurrentMethod] = useState('')
+    const [discordUrl, setDiscordUrl] = useState('')
     //to be updated for validation later
     const { register, errors, handleSubmit } = useForm({defaultValues: {address: '', phone: ''}});
 
-    console.log({address, phone})
+    console.log({address, phone, discordUrl})
 
     const onDropdownChange = (e) => {
       setCurrentMethod(e.target.value)
@@ -27,13 +28,20 @@ export default function Home() {
             },
             body: JSON.stringify({
               "contract_address": address, 
+              "collection_name": 'test',
               "channels": {
                 "sms": {
                 "enable": true,
                 "phone_number": `+1${phone}`
+                },
+                "discord": {
+                  "enable": true, 
+                  "server_name": "eth2022",
+                  "discord_webhook_url": discordUrl,
+                
+                  //https://discord.com/api/webhooks/1038634168835391508/vyT2mxrcIhH-zCGptMqzUwb73nAj23LGYWoEDy57wu099fzjFY-V-wG9VII_BxU3v7Tm
+                }
               },
-            }
-
             })
           })
           console.log({res})
@@ -59,10 +67,14 @@ export default function Home() {
                         <input className='appearance-none block w-full bg-white text-gray-700 border border-gray-400 shadow-inner rounded-md py-3 px-4 leading-tight focus:outline-none  focus:border-gray-500' id='grid-text-1' type='text' placeholder='Enter wallet' onChange={e => setAddress(e.target.value)} value={address} />
                         </div>
                         <div className='w-full md:w-full px-3 mb-6'>
-                                <label className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2' >Phone number</label>
+                                <label className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2'>Phone number</label>
                                 <input className='appearance-none block w-full bg-white text-gray-700 border border-gray-400 shadow-inner rounded-md py-3 px-4 leading-tight focus:outline-none  focus:border-gray-500' type='text' placeholder='Enter phone number'  onChange={e => setPhone(e.target.value)} value={phone} />
                         </div>
                         <div className='w-full md:w-full px-3 mb-6'>
+                                <label className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2'>Discord Webhook URL</label>
+                                <input className='appearance-none block w-full bg-white text-gray-700 border border-gray-400 shadow-inner rounded-md py-3 px-4 leading-tight focus:outline-none  focus:border-gray-500' type='text' placeholder='Enter Discord Webhook URL'  onChange={e => setDiscordUrl(e.target.value)} value={discordUrl} />
+                        </div>
+                        {/* <div className='w-full md:w-full px-3 mb-6'>
                             <label className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2'>Preferred notifications method</label>
                             <div className="flex-shrink w-full inline-block relative">
                                 <select className="block appearance-none text-gray-600 w-full bg-white border border-gray-400 shadow-inner px-4 py-2 pr-8 rounded">
@@ -76,16 +88,16 @@ export default function Home() {
                                     <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
                         <div className="personal w-full border-t border-gray-400 pt-4">
                             <h2 className="text-2xl text-gray-900">Personal info:</h2>
                             <div className="flex items-center justify-between mt-4">
                                 <div className='w-full md:w-1/2 px-3 mb-6'>
-                                    <label className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2' >first name</label>
+                                    <label className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2' >firstname</label>
                                     <input className='appearance-none block w-full bg-white text-gray-700 border border-gray-400 shadow-inner rounded-md py-3 px-4 leading-tight focus:outline-none  focus:border-gray-500' type='text' />
                                 </div>
                                 <div className='w-full md:w-1/2 px-3 mb-6'>
-                                    <label className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2' >last name</label>
+                                    <label className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2' >lastname</label>
                                     <input className='appearance-none block w-full bg-white text-gray-700 border border-gray-400 shadow-inner rounded-md py-3 px-4 leading-tight focus:outline-none  focus:border-gray-500' type='text' />
                                 </div>
                             </div>
