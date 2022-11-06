@@ -7,7 +7,12 @@ export default function Home() {
     const [currentMethod, setCurrentMethod] = useState('')
 
     //to be updated for validation later
-    const { register, errors, handleSubmit } = useForm();
+    const { register, errors, handleSubmit } = useForm({
+      defaultValues: {
+        address: '',
+        phone: '',
+      }
+    });
 
     const onDropdownChange = (e) => {
       setCurrentMethod(e.target.value)
@@ -37,7 +42,7 @@ export default function Home() {
           })
           console.log({res})
           if (res.status === 200) {
-            alert('Monitoring successfully started! You will receive a text notifications if there is any suspicious activity!!')
+            alert('Monitoring succesfully started! ::mag_right::')
           } else {
             alert('Sorry, something went wrong.')
           }
@@ -55,14 +60,14 @@ export default function Home() {
                     <div className='flex flex-wrap -mx-3 mb-6'>
                         <div className='w-full md:w-full px-3 mb-6'>
                             <label className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2'>contract address</label>
-                        <input className='appearance-none block w-full bg-white text-gray-700 border border-gray-400 shadow-inner rounded-md py-3 px-4 leading-tight focus:outline-none  focus:border-gray-500' id='grid-text-1' type='text' placeholder='Enter wallet' onChange={e => setAddress(e.target.value)} value={address} required />
+                        <input className='appearance-none block w-full bg-white text-gray-700 border border-gray-400 shadow-inner rounded-md py-3 px-4 leading-tight focus:outline-none  focus:border-gray-500' id='grid-text-1' type='text' placeholder='Enter wallet' onChange={e => setAddress(e.target.value)} {...register("address", { minLength: 11, required: true})} />
                         </div>
                         <div className='w-full md:w-full px-3 mb-6'>
                                 <label className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2' >Phone number</label>
-                                <input className='appearance-none block w-full bg-white text-gray-700 border border-gray-400 shadow-inner rounded-md py-3 px-4 leading-tight focus:outline-none  focus:border-gray-500' type='text' placeholder='Enter phone number'  onChange={e => setPhone(e.target.value)} value={phone} required />
+                                <input className='appearance-none block w-full bg-white text-gray-700 border border-gray-400 shadow-inner rounded-md py-3 px-4 leading-tight focus:outline-none  focus:border-gray-500' type='text' placeholder='Enter phone number'  onChange={e => setPhone(e.target.value)} {...register("phone", { minLength: 10, maxLength: 10, required: true})} />
                         </div>
                         <div className='w-full md:w-full px-3 mb-6'>
-                            <label className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2'>Future preferred notification method</label>
+                            <label className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2'>Preferred notifications method</label>
                             <div className="flex-shrink w-full inline-block relative">
                                 <select className="block appearance-none text-gray-600 w-full bg-white border border-gray-400 shadow-inner px-4 py-2 pr-8 rounded">
                                     <option>choose ...</option>
@@ -93,7 +98,7 @@ export default function Home() {
                                 <textarea className='bg-gray-100 rounded-md border leading-normal resize-none w-full h-20 py-2 px-3 shadow-inner border border-gray-400 font-medium placeholder-gray-700 focus:outline-none focus:bg-white' ></textarea>
                             </div>
                             <div className="flex justify-end">
-                                <button className="appearance-none bg-gray-200 text-gray-900 px-2 py-1 shadow-sm border border-gray-400 rounded-md mr-3" type="submit">start monitoring</button>
+                                <button className="appearance-none bg-gray-200 text-gray-900 px-2 py-1 shadow-sm border border-gray-400 rounded-md mr-3" type="submit">Start monitoring</button>
                             </div>
                         </div>
                     </div>
