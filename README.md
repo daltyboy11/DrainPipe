@@ -7,8 +7,12 @@ the sooner you can
 * Blacklist those tokens from DAO governance or protocol participation until the situation is fully understood
 * And much more
 
-We use the dune analytics API to run queries and detect potentially suspicious activity. We have one query setup
-for the demo but it could
+We use the dune analytics API to run queries and detect potentially suspicious activity. For the demo we support
+1 query: Find the total NFT transfers for collection in recent blocks where the total is over a threshold. The
+user provides the collection address and the threshold in the input form.
+
+## System Architecture
+![System Architecture](system-architecture.png)
 
 
 ## Setup/Requirements
