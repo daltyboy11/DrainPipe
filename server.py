@@ -1,28 +1,24 @@
 import yaml
 from pathlib import Path
 from subprocess import Popen
-import pdb
+
 
 from fastapi import FastAPI
-from pydantic import BaseModel
 
+from datamodels import RequesterData
 
 app = FastAPI()
-
-class RequesterData(BaseModel):
-    contract_address: str
-    channels : dict
 
 @app.get("/")
 def hello():
     print('shit is poppin')
+    return {"status" : "SUCCESS"}
 
 @app.post("/initservice")
 def initservice(data : RequesterData):
 
     try:
 
-        # verify/check data
         # write info to config/yaml
         config_path = Path(f'config/{data.contract_address}.yaml')
         config_path.parent.mkdir(parents=True, exist_ok=True)
@@ -32,7 +28,7 @@ def initservice(data : RequesterData):
         cmd = ['python', 'main.py', f'{str(config_path)}']
         print(f'Starting process: {" ".join(cmd)}')
         res = Popen(cmd, close_fds=True)
-        print(f"Started process with PID {res.pid}")
+        print(f"Started main.py process with PID {res.pid}")
 
         # return status
         return {
