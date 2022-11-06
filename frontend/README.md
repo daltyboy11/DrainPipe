@@ -22,7 +22,7 @@ success Saved lockfile.
 
 ```
 cd frontend
-yarn dev
+yarn run dev
 yarn run v1.22.19
 $ next dev
 ready - started server on 0.0.0.0:3000, url: http://localhost:3000
