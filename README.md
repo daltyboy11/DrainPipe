@@ -1,4 +1,15 @@
-Please don't rug me
+# DrainPipe
+DrainPipe is a near real-time alerting system for DAO's and NFT communities. We monitor the chain for
+suspicious NFT activiy (e.g. a large number of transfers for a collection in a single block) and send
+alerts via text and discord. The sooner you know if a wallet is hacked and being drained of its NFTs
+the sooner you can
+* Report the tokens as stolen to OpenSea to prevent the hacker from cashing out
+* Blacklist those tokens from DAO governance or protocol participation until the situation is fully understood
+* And much more
+
+We use the dune analytics API to run queries and detect potentially suspicious activity. We have one query setup
+for the demo but it could
+
 
 ## Setup/Requirements
 * Python 3.8+
