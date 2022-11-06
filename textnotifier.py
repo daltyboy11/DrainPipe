@@ -20,7 +20,7 @@ class TextNotifier(Notifier):
         return (d2 - d1).total_seconds() / 60
 
     def get_text_msg_body(self, raw_data):
-        etherscan_link = 'https://etherscan.io/address/{}'.format(raw_data['wallet'])
+        polygonscan_link = 'https://polygonscan.com/address/{}'.format(raw_data['wallet'])
         collection = self.collection_name if self.collection_name is not None else self.collection_address
 
         return """
@@ -30,7 +30,7 @@ class TextNotifier(Notifier):
             collection,
             raw_data['start_block'],
             raw_data['end_block'],
-            etherscan_link
+            polygonscan_link
         )
         
     def notify(self, raw_data):

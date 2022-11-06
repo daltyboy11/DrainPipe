@@ -22,13 +22,13 @@ class DiscordNotifier(Notifier):
 
         collection = self.collection_name if self.collection_name is not None else self.collection_address
         wallet_address = raw_data['wallet']
-        etherscan_link = f"https://etherscan.io/address/{wallet_address}"
+        polygonscan_link = f"https://polygonscan.com/address/{wallet_address}"
         start_block = raw_data['start_block']
         end_block = raw_data['end_block']
 
         return f"""
         @everyone Drainpipe detected {raw_data['transfers']} transfer(s) for collection {collection} from wallet {wallet_address} recently (from block {start_block}:{end_block}). 
-        You may want to investigate for potential suspicious activity: {etherscan_link}
+        You may want to investigate for potential suspicious activity: {polygonscan_link}
         """            
         
     def notify(self, raw_data):
