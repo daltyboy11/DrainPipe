@@ -14,6 +14,10 @@ user provides the collection address and the threshold in the input form.
 ## System Architecture
 ![System Architecture](system-architecture.png)
 
+## Future Improvements
+* Creating more detection rules
+* Adding more notification channels
+* Making detection closer to real-time
 
 ## Setup/Requirements
 * Python 3.8+
