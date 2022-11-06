@@ -18,7 +18,7 @@ def get_user_config(config_path: Path):
 def main():
     assert len(sys.argv) == 2, "Incorrect number of arguments"
 
-    silent = False
+    silent = True
     f = open('api_keys.json')
     api_config = json.load(f)
     f.close()
