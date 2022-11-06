@@ -10,6 +10,5 @@ class APIConfig(BaseModel):
     
 class RequesterData(BaseModel):
     contract_address: str
-    wallet_address: str
     collection_name: str
     channels : dict

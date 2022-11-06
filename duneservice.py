@@ -13,7 +13,6 @@ class DuneService:
     def __init__(self, api_config: APIConfig, user_config, silent=False):
         self.api_key = api_config.dune_api_key
         self.w3 = Web3(Web3.HTTPProvider(api_config.alchemy_polygon_url))
-        self.wallet = user_config['wallet_address']
         self.contract = user_config['contract_address']
 
     def get_headers(self):

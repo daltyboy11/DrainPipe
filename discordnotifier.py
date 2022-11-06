@@ -19,27 +19,17 @@ class DiscordNotifier(Notifier):
         return (d2 - d1).total_seconds() / 60
 
     def get_msg_body(self, raw_data):
-        min_block = float('inf')
-        max_block = float('-inf')
-        for block in raw_data['blocks']:
-            min_block = min(min_block, block['block_num'])
-            max_block = max(min_block, block['block_num'])
-
-        wallet_address = raw_data['wallet']
-        etherscan_link = f"https://etherscan.io/address/{wallet_address}"
 
         collection = self.collection_name if self.collection_name is not None else self.collection_address
+        wallet_address = raw_data['wallet']
+        etherscan_link = f"https://etherscan.io/address/{wallet_address}"
+        start_block = raw_data['start_block']
+        end_block = raw_data['end_block']
 
-        if min_block == max_block:
-            return f"""
-            @everyone Drainpipe detected {raw_data['total_transfers']} transfer(s) for collection {collection} from wallet {wallet_address} recently (block {min_block}). 
-            You may want to investigate for potential suspicious activity: {etherscan_link}
-            """
-        else:
-            return f"""
-            @everyone Drainpipe detected {raw_data['total_transfers']} transfer(s) for collection {collection} from wallet {wallet_address} recently (from block {min_block}:{max_block}). 
-            You may want to investigate for potential suspicious activity: {etherscan_link}
-            """            
+        return f"""
+        @everyone Drainpipe detected {raw_data['transfers']} transfer(s) for collection {collection} from wallet {wallet_address} recently (from block {start_block}:{end_block}). 
+        You may want to investigate for potential suspicious activity: {etherscan_link}
+        """            
         
     def notify(self, raw_data):
 
