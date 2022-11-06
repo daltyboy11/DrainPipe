@@ -5,14 +5,10 @@ export default function Home() {
     const [address, setAddress] = useState('')
     const [phone, setPhone] = useState('')
     const [currentMethod, setCurrentMethod] = useState('')
-
     //to be updated for validation later
-    const { register, errors, handleSubmit } = useForm({
-      defaultValues: {
-        address: '',
-        phone: '',
-      }
-    });
+    const { register, errors, handleSubmit } = useForm({defaultValues: {address: '', phone: ''}});
+
+    console.log({address, phone})
 
     const onDropdownChange = (e) => {
       setCurrentMethod(e.target.value)
@@ -60,11 +56,11 @@ export default function Home() {
                     <div className='flex flex-wrap -mx-3 mb-6'>
                         <div className='w-full md:w-full px-3 mb-6'>
                             <label className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2'>contract address</label>
-                        <input className='appearance-none block w-full bg-white text-gray-700 border border-gray-400 shadow-inner rounded-md py-3 px-4 leading-tight focus:outline-none  focus:border-gray-500' id='grid-text-1' type='text' placeholder='Enter wallet' onChange={e => setAddress(e.target.value)} {...register("address", { minLength: 11, required: true})} />
+                        <input className='appearance-none block w-full bg-white text-gray-700 border border-gray-400 shadow-inner rounded-md py-3 px-4 leading-tight focus:outline-none  focus:border-gray-500' id='grid-text-1' type='text' placeholder='Enter wallet' onChange={e => setAddress(e.target.value)} value={address} />
                         </div>
                         <div className='w-full md:w-full px-3 mb-6'>
                                 <label className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2' >Phone number</label>
-                                <input className='appearance-none block w-full bg-white text-gray-700 border border-gray-400 shadow-inner rounded-md py-3 px-4 leading-tight focus:outline-none  focus:border-gray-500' type='text' placeholder='Enter phone number'  onChange={e => setPhone(e.target.value)} {...register("phone", { minLength: 10, maxLength: 10, required: true})} />
+                                <input className='appearance-none block w-full bg-white text-gray-700 border border-gray-400 shadow-inner rounded-md py-3 px-4 leading-tight focus:outline-none  focus:border-gray-500' type='text' placeholder='Enter phone number'  onChange={e => setPhone(e.target.value)} value={phone} />
                         </div>
                         <div className='w-full md:w-full px-3 mb-6'>
                             <label className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2'>Preferred notifications method</label>
