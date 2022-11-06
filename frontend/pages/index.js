@@ -16,10 +16,6 @@ export default function Home() {
     }
 
     const onSubmit = async (e) => {
-      //currentMethod = discord >> give enum
-
-        console.log('hit')
-        console.log({e})
         try {
           const res = await fetch('http://127.0.0.1:8000/initservice', {
             method: 'post',
@@ -46,7 +42,7 @@ export default function Home() {
           })
           console.log({res})
           if (res.status === 200) {
-            alert('Monitoring succesfully started! ::mag_right::')
+            alert('Monitoring succesfully started!')
           } else {
             alert('Sorry, something went wrong.')
           }
