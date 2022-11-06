@@ -1,6 +1,6 @@
 # DrainPipe
 DrainPipe is a near real-time alerting system for DAO's and NFT communities. We monitor the chain for
-suspicious NFT activiy (e.g. a large number of transfers for a collection in a single block) and send
+suspicious NFT activity (e.g. a large number of transfers for a collection in a single block) and send
 alerts via text and discord. The sooner you know if a wallet is hacked and being drained of its NFTs
 the sooner you can
 * Report the tokens as stolen to OpenSea to prevent the hacker from cashing out
