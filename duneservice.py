@@ -28,7 +28,6 @@ class DuneService:
             "contract": self.contract,
             "start_block": "0",
             "end_block": "99999999",
-            "wallet": self.wallet,
             "min_transfers": "0"
         }
         return params
@@ -101,14 +100,15 @@ class DuneService:
 
     def post_process_query_result(self, response, start_block, end_block):
         rows = response['result']['rows']
-
+        
         if len(rows) == 0:
             return {}
 
+        # Just take the first 1 event if there are multiple
         return {
-            'wallet': self.wallet,
             'start_block': start_block,
             'end_block': end_block,
+            'wallet': response['result']['rows'][0]['from'],
             'transfers': response['result']['rows'][0]['transfers']
         }
 
