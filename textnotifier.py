@@ -1,12 +1,14 @@
 from datetime import datetime
 from twilio.rest import Client
 from twilio.base.exceptions import TwilioRestException
+
+from datamodels import APIConfig
 from notifier import Notifier
 
 class TextNotifier(Notifier):
-    def __init__(self, api_config, phone_number, collection_address, collection_name, silent):
-        self.twilio_client = Client(api_config["twilio_sid"], api_config["twilio_auth_token"])
-        self.twilio_number = api_config["twilio_phone_number"]
+    def __init__(self, api_config: APIConfig, phone_number, collection_address, collection_name, silent):
+        self.twilio_client = Client(api_config.twilio_sid, api_config.twilio_auth_token)
+        self.twilio_number = api_config.twilio_phone_number
         self.phone_number = phone_number
         self.collection_address = collection_address
         self.collection_name = collection_name

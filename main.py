@@ -1,12 +1,20 @@
-
+# Builtin
 import time
 import json
 import sys
 from pathlib import Path
-import yaml
+from dataclasses import dataclass
 
+
+# 3rd party
+import yaml
+from pydantic import BaseModel
+  
+# Custom
+from datamodels import APIConfig
 from duneservice import *
 from notificationservice import NotificationService
+
 
 def get_user_config(config_path: Path):
 
@@ -20,19 +28,16 @@ def main():
 
     silent = False
     f = open('api_keys.json')
-    api_config = json.load(f)
+    api_config = APIConfig(**json.load(f))
     f.close()
 
-    # Load user info
+    # Load user info and configure services
     user_config = get_user_config(Path(sys.argv[1]))
-
-    ###########
-    # FIX ME
     dune_service = DuneService(api_config, user_config)
-    ns = NotificationService(api_config, user_config, silent=silent)
+    notify_service = NotificationService(api_config, user_config, silent=silent)
 
     while True:
-        print("Running dune query")
+        print("Running dune query")        
         response = dune_service.run_query_loop()
         if (response == "failed"):
             continue
@@ -40,7 +45,7 @@ def main():
         print(json.dumps(response, indent=2))
 
         print("Sending notifications async")
-        ns.notify(response)
+        notify_service.notify(response)
 
         print("Query loop done, sleeping 10s")
         time.sleep(10)
