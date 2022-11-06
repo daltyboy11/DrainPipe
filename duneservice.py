@@ -5,7 +5,7 @@ import time
 BASE_URL = "https://api.dune.com/api/v1/"
 
 QUERIES = {
-    "nft-transfers-grouped-by-block": "1531241"
+    "erc1155-single-transfer": "1532614"
 }
 
 class DuneService:
@@ -27,8 +27,8 @@ class DuneService:
             "contract": self.contract,
             "start_block": "0",
             "end_block": "99999999",
-            "min_transfers": "0",
-            "wallet": self.wallet
+            "wallet": self.wallet,
+            "min_transfers": "0"
         }
         return params
 
@@ -98,25 +98,23 @@ class DuneService:
 
         return response
 
-    def post_process_query_result(self, response):
-        post_processed_result = {
+    def post_process_query_result(self, response, start_block, end_block):
+        rows = response['result']['rows']
+
+        if len(rows) == 0:
+            return {}
+
+        return {
             'wallet': self.wallet,
-            'total_transfers': 0,
-            'blocks': []
+            'start_block': start_block,
+            'end_block': end_block,
+            'transfers': response['result']['rows'][0]['transfers']
         }
 
-        for row in response['result']['rows']:
-            post_processed_result['total_transfers'] += row['num_transfers']
-            post_processed_result['blocks'].append({
-                'block_num': row['block_number'],
-                'num_transfers': row['num_transfers'] 
-            })
-
-        return post_processed_result
-
     def run_query_loop(self):
-        query_id = QUERIES["nft-transfers-grouped-by-block"]
-        execution_id = self.execute_query(query_id, params=self.gen_query_params())
+        query_id = QUERIES["erc1155-single-transfer"]
+        query_params = self.gen_query_params()
+        execution_id = self.execute_query(query_id, params=query_params)
         response = self.get_query_status(execution_id).json()
 
         while response['state'] != 'QUERY_STATE_COMPLETED' and response['state'] != 'QUERY_STATE_FAILED':
@@ -131,4 +129,4 @@ class DuneService:
             print(response)
             return "failed"
         else:
-            return self.post_process_query_result(response)
+            return self.post_process_query_result(response, query_params['start_block'], query_params['end_block'])

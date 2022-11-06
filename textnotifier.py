@@ -18,24 +18,18 @@ class TextNotifier(Notifier):
         return (d2 - d1).total_seconds() / 60
 
     def get_text_msg_body(self, raw_data):
-        min_block = float('inf')
-        max_block = float('-inf')
-        for block in raw_data['blocks']:
-            min_block = min(min_block, block['block_num'])
-            max_block = max(min_block, block['block_num'])
-
         etherscan_link = 'https://etherscan.io/address/{}'.format(raw_data['wallet'])
-
         collection = self.collection_name if self.collection_name is not None else self.collection_address
 
-        if min_block == max_block:
-            return """
-            Hey! We noticed {} transfer(s) for collection {} from your wallet recently (block {}). You may want to investigate for potential suspicious activity: {}
-            """.format(raw_data['total_transfers'], collection, min_block, etherscan_link)
-        else:
-            return """
-            Hey! We noticed {} transfer(s) for collection {} from your wallet recently (from block {} to {}). You may want to investigate for potential suspicious activity: {}
-            """.format(raw_data['total_transfers'], collection, min_block, max_block, etherscan_link)
+        return """
+        Hey! We noticed {} transfer(s) for collection {} from your wallet recently (block {} - {}). You may want to investigate for potential suspicious activity: {}
+        """.format(
+            raw_data['transfers'],
+            collection,
+            raw_data['start_block'],
+            raw_data['end_block'],
+            etherscan_link
+        )
         
     def notify(self, raw_data):
         print("Sending text notification to {}!".format(self.phone_number))
