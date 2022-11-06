@@ -12,7 +12,6 @@ class DuneService:
     def __init__(self, api_config, user_config):
         self.api_key = api_config['dune_api_key']
         self.w3 = Web3(Web3.HTTPProvider(api_config['alchemy_polygon_url']))
-        self.wallet = user_config['wallet_address']
         self.contract = user_config['contract_address']
 
     def get_headers(self):
@@ -27,7 +26,6 @@ class DuneService:
             "contract": self.contract,
             "start_block": "0",
             "end_block": "99999999",
-            "wallet": self.wallet,
             "min_transfers": "0"
         }
         return params
@@ -100,14 +98,15 @@ class DuneService:
 
     def post_process_query_result(self, response, start_block, end_block):
         rows = response['result']['rows']
-
+        
         if len(rows) == 0:
             return {}
 
+        # Just take the first 1 event if there are multiple
         return {
-            'wallet': self.wallet,
             'start_block': start_block,
             'end_block': end_block,
+            'wallet': response['result']['rows'][0]['from'],
             'transfers': response['result']['rows'][0]['transfers']
         }
 
