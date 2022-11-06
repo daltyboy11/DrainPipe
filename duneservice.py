@@ -5,14 +5,15 @@ import time
 BASE_URL = "https://api.dune.com/api/v1/"
 
 QUERIES = {
-    "nft-transfers-grouped-by-block": "1531241"
+    "erc1155-single-transfer": "1532614"
 }
 
-
 class DuneService:
-    def __init__(self, config):
-        self.api_key = config['dune_api_key']
-        self.w3 = Web3(Web3.HTTPProvider(config['alchemy_polygon_url']))
+    def __init__(self, api_config, user_config):
+        self.api_key = api_config['dune_api_key']
+        self.w3 = Web3(Web3.HTTPProvider(api_config['alchemy_polygon_url']))
+        self.wallet = user_config['wallet_address']
+        self.contract = user_config['contract_address']
 
     def get_headers(self):
         return {"x-dune-api-key" : self.api_key}
@@ -23,10 +24,11 @@ class DuneService:
         # end_block = 15575300
         # start_block = 13276755
         params={
-            "contract": "0xa9348471D0c803f0f05fB04E94ae737e1A36F248",
+            "contract": self.contract,
             "start_block": "0",
             "end_block": "99999999",
-            "min_transfers": "0",
+            "wallet": self.wallet,
+            "min_transfers": "0"
         }
         return params
 
@@ -96,29 +98,23 @@ class DuneService:
 
         return response
 
-    def post_process_query_result(self, response):
-        result = response['result']
-        rows = result['rows']
-        grouped_by_from = {}
-        for row in rows:
-            addr = row['from']
-            block_data = {
-                'block_num': row['block_number'],
-                'num_transfers': row['num_transfers']
-            }
-            if addr in grouped_by_from:
-                grouped_by_from[addr]['total_transfers'] += row['num_transfers']
-                grouped_by_from[addr]['blocks'].append(block_data)
-            else:
-                grouped_by_from[addr] = {
-                    'total_transfers': row['num_transfers'],
-                    'blocks': [block_data]
-                }
-        return grouped_by_from
+    def post_process_query_result(self, response, start_block, end_block):
+        rows = response['result']['rows']
+
+        if len(rows) == 0:
+            return {}
+
+        return {
+            'wallet': self.wallet,
+            'start_block': start_block,
+            'end_block': end_block,
+            'transfers': response['result']['rows'][0]['transfers']
+        }
 
     def run_query_loop(self):
-        query_id = QUERIES["nft-transfers-grouped-by-block"]
-        execution_id = self.execute_query(query_id, params=self.gen_query_params())
+        query_id = QUERIES["erc1155-single-transfer"]
+        query_params = self.gen_query_params()
+        execution_id = self.execute_query(query_id, params=query_params)
         response = self.get_query_status(execution_id).json()
 
         while response['state'] != 'QUERY_STATE_COMPLETED' and response['state'] != 'QUERY_STATE_FAILED':
@@ -133,4 +129,4 @@ class DuneService:
             print(response)
             return "failed"
         else:
-            return self.post_process_query_result(response)
+            return self.post_process_query_result(response, query_params['start_block'], query_params['end_block'])

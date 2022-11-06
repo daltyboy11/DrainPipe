@@ -8,7 +8,7 @@ import yaml
 from duneservice import *
 from notificationservice import NotificationService
 
-def get_notif_config(config_path: Path):
+def get_user_config(config_path: Path):
 
     """This should be the yaml file writter by the server code
     named with the contract address"""
@@ -24,12 +24,11 @@ def main():
     f.close()
 
     # Load user info
-    user_config = get_notif_config(Path(sys.argv[1]))
-
+    user_config = get_user_config(Path(sys.argv[1]))
 
     ###########
     # FIX ME
-    dune_service = DuneService(api_config)
+    dune_service = DuneService(api_config, user_config)
     ns = NotificationService(api_config, user_config, silent=silent)
 
     while True:
