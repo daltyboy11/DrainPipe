@@ -14,6 +14,7 @@ class DuneService:
         self.api_key = api_config.dune_api_key
         self.w3 = Web3(Web3.HTTPProvider(api_config.alchemy_polygon_url))
         self.contract = user_config['contract_address']
+        #self.min_transfers = user_config['min_transfers']
 
     def get_headers(self):
         return {"x-dune-api-key" : self.api_key}
@@ -114,6 +115,7 @@ class DuneService:
     def run_query_loop(self):
         query_id = QUERIES["erc1155-single-transfer"]
         query_params = self.gen_query_params()
+        print(query_params, 'q')
         execution_id = self.execute_query(query_id, params=query_params)
         response = self.get_query_status(execution_id).json()
 
@@ -124,6 +126,8 @@ class DuneService:
 
         response = self.get_query_results(execution_id).json()
 
+        print("FULL RESPONSE")
+        print(response)
         if (response['state'] == 'QUERY_STATE_FAILED'):
             print("Dune query failed!")
             print(response)

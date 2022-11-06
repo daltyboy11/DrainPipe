@@ -39,6 +39,7 @@ def main():
     while True:
         print("Running dune query")        
         response = dune_service.run_query_loop()
+        print(response)
         if (response == "failed"):
             continue
         

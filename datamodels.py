@@ -9,6 +9,7 @@ class APIConfig(BaseModel):
     discord_webhook_url: str
     
 class RequesterData(BaseModel):
+    # min_transfers: int
     contract_address: str
     collection_name: str
     channels : dict
