@@ -1,0 +1,97 @@
+## Folders
+bin/
+obj/
+
+## Audio Files
+*.wav
+*.mp2
+*.mp3
+*.aiff
+
+## Video Files
+*.mp4
+*.mov
+*.avi
+*.m4a
+
+## Data Files
+*.db*
+*.rfp
+*.mhf
+*.bin
+*.pk
+*.pkl
+*.npy
+*.list
+*.xls
+*.xlsx
+*.json
+*.yaml
+
+## Plots
+*.pdf
+*.png
+*.jpg
+*.JPG
+
+## Build files
+*.pyc
+*.o
+*.so
+*.a
+*.dylib
+*.log
+*.swp
+
+## LaTeX Files
+*.aux
+*.cls
+*.bbl
+*.blg
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+
+# Numbers
+*.numbers
+
+#Autosaves
+*ipynb_checkpoints*
+
+#Web
+*.html
+
+# git ls-files --others --exclude-from=.git/info/exclude
+# Lines that start with '#' are comments.
+# For a project mostly in C, the following would be a good set of
+# exclude patterns (uncomment them if you want to use them):
+# *.[oa]
+# *~
+
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Icon must end with two \r
+Icon
+
+
+# Thumbnails
+._*
+
+# Files that might appear in the root of a volume
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+
+# Directories potentially created on remote AFP share
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+api_keys.json
